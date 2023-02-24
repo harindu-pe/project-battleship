@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --darkgreen: #30505c;
+  --green: rgb(69, 178, 157);
+  --yellow: #efc94c;
+  --orange: #e27a3f;
+  --red: #df4949;
+  --light: rgb(229, 235, 235);
+  --dark: #403e39;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  height: 100vh;
+  background-color: var(--light);
+  display: flex;
+  flex-direction: column;
+}
+
+.game-title {
+  width: auto;
+  padding: 0.25rem;
+  text-align: center;
+  background-color: var(--red);
+  color: var(--light);
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.25rem 0rem;
+}
+
+.game-start {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.game-start > h2 {
+  background-color: var(--light);
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.5rem 2rem;
+}
+
+.game-start > h2:hover {
+  background-color: var(--darkgreen);
+  color: var(--light);
+  cursor: pointer;
+}
+
+.game-status {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.game-status > h2 {
+  background-color: var(--light);
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  color: var(--red);
+}
+
+.board-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+  .board-container {
+    flex-direction: row;
+  }
+  .game-start > h2,
+  .game-status > h2 {
+    padding: 0.5rem 2rem;
+  }
+}
+
+.player-board-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  border-radius: 10px;
+  background-color: rgba(48, 80, 92, 0.5);
+}
+
+.player-grid,
+.computer-grid {
+  width: 298px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.computer-board-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  border-radius: 10px;
+}
+
+.grid-item {
+  width: 28px;
+  height: 28px;
+  border: 1px solid black;
+  background-color: var(--light);
+}
+
+.grid-item.placed {
+  background-color: var(--orange);
+}
+
+.grid-item:hover {
+  outline: none;
+  border-color: #9cabb7;
+  box-shadow: 0 0 10px #9ecaed;
+  cursor: pointer;
+}
