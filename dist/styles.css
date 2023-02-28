@@ -36,37 +36,47 @@ body {
   padding: 0.25rem 0rem;
 }
 
-.game-start {
-  width: auto;
+.game-start,
+.game-status,
+.game-reset {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.game-start > h2 {
+.game-start > h3 {
   background-color: var(--light);
   border: 2px solid black;
   border-radius: 10px;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
+  color: black;
 }
 
-.game-start > h2:hover {
+.game-start > h3:hover,
+.game-reset > h3:hover {
   background-color: var(--darkgreen);
   color: var(--light);
   cursor: pointer;
 }
 
-.game-status {
-  width: auto;
-  display: flex;
-  justify-content: center;
+.game-start.started {
+  background-color: var(--darkgreen);
 }
 
-.game-status > h2 {
+.game-status > h3 {
+  background-color: rgba(48, 80, 92, 0.5);
+  /* border: 2px double black; */
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  color: black;
+}
+
+.game-reset > h3 {
   background-color: var(--light);
   border: 2px solid black;
   border-radius: 10px;
   padding: 0.5rem 1rem;
-  color: var(--red);
+  color: black;
 }
 
 .board-container {

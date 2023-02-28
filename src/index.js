@@ -1,66 +1,63 @@
-import createPlayer from "./createPlayer";
-import initGameBoard from "./gameBoard";
+import Ship from "./factories/Ship";
+import Gameboard from "./factories/Gameboard";
+import Player from "./factories/Player";
+import generateGrid from "./dom/generateGrid";
 
-// reference html elements
-const playerGrid = document.getElementById("player-grid");
-const computerGrid = document.getElementById("computer-grid");
+// HTML
+const [playerGrid, computerGrid] = generateGrid();
+const startButton = document.getElementById("start-button");
 
-// creating the player grid HTML
-for (let i = 1; i <= 10; i++) {
-  for (let j = 1; j <= 10; j++) {
-    const gridDiv = document.createElement("div");
-    gridDiv.classList.add("grid-item");
-    gridDiv.setAttribute("grid", `${i},${j}`);
-    playerGrid.appendChild(gridDiv);
-  }
-}
-
-// creating the computer grid HTML
-for (let i = 1; i <= 10; i++) {
-  for (let j = 1; j <= 10; j++) {
-    const gridDiv = document.createElement("div");
-    gridDiv.classList.add("grid-item");
-    gridDiv.setAttribute("grid", `${i},${j}`);
-    computerGrid.appendChild(gridDiv);
-  }
-}
-
-// player gameboard
-const playerBoard = initGameBoard(10);
-// playerBoard.placeShipRandom();
-console.log(playerBoard.placeShip("10,1", 1, false));
-
-console.log(playerBoard.board);
-
-// player placing ships (WORK IN PROGRESS)
-// const playerGridItems = playerGrid.childNodes;
-// playerGridItems.forEach((playerGridItem) => {
-//   playerGridItem.addEventListener("click", () => {
-//     playerBoard.placeShip(playerGridItem.getAttribute("grid"), 1, false);
-//     playerGridItem.classList.add("placed");
-//   });
-// });
-
-// randomly place player ships
-const playerGridItems = playerGrid.childNodes;
-playerGridItems.forEach((playerGridItem) => {
-  const coordinatesArray = playerGridItem.getAttribute("grid").split(",");
-  const row = coordinatesArray[0];
-  const col = coordinatesArray[1];
-
-  // visualize ships
-  if (playerBoard.board[`${row},${col}`] !== null) {
-    playerGridItem.classList.add("placed");
-  }
+// start game loop when user clicks start button
+startButton.addEventListener("click", () => {
+  startGame(playerGrid);
 });
 
-// setting up computer board
-// const computerBoard = initGameBoard(10);
-// computerBoard.placeShipRandom();
+// game loop logic
+function startGame(playerGrid) {
+  // initialize game
+  const [
+    playerGameBoard,
+    playerCharacter,
+    computerGameBoard,
+    computerCharacter,
+  ] = initializeGame();
+  // place player ships randomly
+  playerGameBoard.placeShipsRandomly();
+  // place computer ships randomly
+  computerGameBoard.placeShipsRandomly();
 
-// computerBoard.receiveAttack("1,1");
-// console.log(computerBoard.hasAllShipsSunk());
+  // visualize player ships
+  updateGridHTML(playerGrid, playerGameBoard);
+  updateGridHTML(computerGrid, computerGameBoard);
+}
 
-// const computer = createPlayer("Blaze");
-// computer.randomAttackBoard(testBoard);
-// computer.playerAttackBoard(testBoard, 11);
+// initialize gameboard and players
+function initializeGame() {
+  // player
+  const playerGameBoard = new Gameboard();
+  playerGameBoard.placeShipsRandomly();
+  const playerCharacter = new Player("player");
+  // computer
+  const computerGameBoard = new Gameboard();
+  const computerCharacter = new Player("computer");
+
+  return [
+    playerGameBoard,
+    playerCharacter,
+    computerGameBoard,
+    computerCharacter,
+  ];
+}
+
+// update the grid
+function updateGridHTML(grid, gameboard) {
+  const gridItems = grid.childNodes;
+  gridItems.forEach((gridItem) => {
+    const row = gridItem.getAttribute("row");
+    const col = gridItem.getAttribute("col");
+    // visualize ships
+    if (gameboard.board[row][col] !== null) {
+      gridItem.classList.add("placed");
+    }
+  });
+}
